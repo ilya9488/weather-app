@@ -15,13 +15,14 @@
 
 ## Запуск
 
-Потрібен Node.js 20.19+ і ключ OpenWeatherMap (безкоштовного тарифу достатньо): https://home.openweathermap.org/api_keys
+Потрібен Node.js 20.19+.
 
 ```bash
 npm install
-cp .env.example .env   # вставте ключ у VITE_OWM_API_KEY
 npm run dev
 ```
+
+Ключ OpenWeatherMap уже прописаний у `.env`, щоб проєкт запускався одразу після клонування (у клієнтському додатку ключ однаково видно в зібраному JS). Щоб використати свій ключ, замініть `VITE_OWM_API_KEY` у `.env` або створіть `.env.local` за зразком `.env.example`. Отримати ключ: https://home.openweathermap.org/api_keys
 
 | Команда           | Що робить                         |
 | ----------------- | --------------------------------- |
@@ -38,7 +39,7 @@ npm run dev
 **GitHub Pages** (налаштовано в `.github/workflows/deploy.yml`): після push у `main` проєкт перевіряється (lint, тести), збирається й публікується.
 
 1. Settings → Pages → Source: **GitHub Actions**.
-2. Якщо ключ не закомічений у `.env`: Settings → Secrets and variables → Actions → новий secret `VITE_OWM_API_KEY`.
+2. Необов'язково: щоб зібрати з іншим ключем, додайте secret `VITE_OWM_API_KEY` (Settings → Secrets and variables → Actions) — він має пріоритет над `.env`.
 
 **Vercel / Netlify**: build command `npm run build`, output `dist`, змінна оточення `VITE_OWM_API_KEY`.
 

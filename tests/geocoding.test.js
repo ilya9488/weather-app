@@ -6,7 +6,7 @@ vi.mock('@/api/http', () => ({
 }))
 
 const { http, owmHttp } = await import('@/api/http')
-const { searchCities } = await import('@/api/geocoding')
+const { searchCities, clearSearchCache } = await import('@/api/geocoding')
 
 const kharkiv = { id: 706483, latitude: 49.98, longitude: 36.25, country_code: 'UA' }
 const district = {
@@ -39,6 +39,7 @@ const owmVillage = {
 
 beforeEach(() => {
   vi.resetAllMocks()
+  clearSearchCache()
   http.get.mockImplementation((_url, { params }) => Promise.resolve(openMeteo(params.language)))
   owmHttp.get.mockResolvedValue({ data: [owmVillage] })
 })
@@ -67,5 +68,51 @@ describe('searchCities', () => {
     http.get.mockRejectedValue(new Error('blocked'))
     owmHttp.get.mockRejectedValue({ response: { status: 401 } })
     await expect(searchCities('Харк')).rejects.toMatchObject({ code: 'UNAUTHORIZED' })
+  })
+
+  it('finds a village known only by its Latin name and adds the Ukrainian name', async () => {
+    const village = {
+      id: 8504779,
+      name: 'Kriukivshchyna',
+      latitude: 50.37153,
+      longitude: 30.36861,
+      country_code: 'UA',
+      admin1: 'Київська область',
+      feature_code: 'PPL',
+    }
+    // Open-Meteo: nothing for Cyrillic, the village for the transliteration
+    http.get.mockImplementation((_url, { params }) =>
+      Promise.resolve({ data: params.name === 'Kriukivshch' ? { results: [village] } : {} }),
+    )
+    // OpenWeatherMap: nothing for the partial name, the village for its full Latin name
+    owmHttp.get.mockImplementation((_url, { params }) =>
+      Promise.resolve({
+        data:
+          params.q === 'Kriukivshchyna,UA'
+            ? [
+                {
+                  name: 'Kriukivshchyna',
+                  local_names: { uk: 'Крюківщина', en: 'Kriukivshchyna' },
+                  lat: 50.371929,
+                  lon: 30.371622,
+                  country: 'UA',
+                },
+              ]
+            : [],
+      }),
+    )
+
+    const cities = await searchCities('Крюківщ', { locale: 'uk' })
+
+    expect(cities).toHaveLength(1)
+    expect(cities[0].localNames.uk).toBe('Крюківщина')
+    expect(cities[0].regions.uk).toBe('Київська область')
+  })
+
+  it('reuses results for a repeated query', async () => {
+    await searchCities('Харк')
+    const calls = http.get.mock.calls.length
+    await searchCities('харк ')
+    expect(http.get.mock.calls.length).toBe(calls)
   })
 })

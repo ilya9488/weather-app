@@ -59,7 +59,7 @@ export function uniqueCities(cities) {
   })
 }
 
-function isSamePlace(a, b) {
+export function isSamePlace(a, b) {
   return (
     a.country === b.country &&
     Math.abs(a.lat - b.lat) < SAME_PLACE_DEGREES &&

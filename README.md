@@ -1,5 +1,7 @@
 # Weather
 
+**Демо:** https://ilya9488.github.io/weather-app/
+
 Додаток погоди на Vue 3 та [OpenWeatherMap API](https://openweathermap.org/): пошук міста з автокомплітом, картка погоди, графік температури, до 5 блоків з різними містами, вибране, прогноз на 5 днів, визначення міста за IP, мови uk/en, денна та нічна тема.
 
 ## Стек
@@ -36,10 +38,10 @@ npm run dev
 
 Збірка — статичні файли з `dist/`, тому підходить будь-який хостинг.
 
-**GitHub Pages** (налаштовано в `.github/workflows/deploy.yml`): після push у `main` проєкт перевіряється (lint, тести), збирається й публікується.
+**GitHub Pages** (налаштовано в `.github/workflows/deploy.yml`): після push у `main` проєкт перевіряється (lint, тести), збирається й публікується в гілку `gh-pages`.
 
-1. Settings → Pages → Source: **GitHub Actions**.
-2. Необов'язково: щоб зібрати з іншим ключем, додайте secret `VITE_OWM_API_KEY` (Settings → Secrets and variables → Actions) — він має пріоритет над `.env`.
+- Pages: Settings → Pages → Source: **Deploy from a branch**, гілка `gh-pages`, папка `/ (root)`.
+- Необов'язково: щоб зібрати з іншим ключем, додайте secret `VITE_OWM_API_KEY` (Settings → Secrets and variables → Actions) — він має пріоритет над `.env`.
 
 **Vercel / Netlify**: build command `npm run build`, output `dist`, змінна оточення `VITE_OWM_API_KEY`.
 

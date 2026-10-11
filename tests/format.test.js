@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { formatLongDate, formatTemp, formatTime } from '@/utils/format'
-import { getCityName, makeCityId, normalizeGeoCity, uniqueCities } from '@/utils/city'
+import {
+  getCityName,
+  getCityRegion,
+  makeCityId,
+  mergeCities,
+  normalizeGeoCity,
+  normalizeOpenMeteoCity,
+  uniqueCities,
+} from '@/utils/city'
 
 describe('formatTemp', () => {
   it('rounds and adds the degree sign', () => {
@@ -48,6 +56,7 @@ describe('city helpers', () => {
       id: makeCityId(raw.lat, raw.lon),
       name: 'Kyiv',
       localNames: { uk: 'Київ', en: 'Kyiv' },
+      regions: {},
       lat: raw.lat,
       lon: raw.lon,
       country: 'UA',
@@ -65,5 +74,42 @@ describe('city helpers', () => {
     const city = normalizeGeoCity(raw)
     const copy = normalizeGeoCity({ ...raw, lat: 50.45, lon: 30.52 })
     expect(uniqueCities([city, copy])).toHaveLength(1)
+  })
+
+  it('normalizes an Open-Meteo result with names in both languages', () => {
+    const base = { id: 703448, latitude: 50.45466, longitude: 30.5238, country_code: 'UA' }
+    const city = normalizeOpenMeteoCity(base, {
+      uk: { ...base, name: 'Київ', admin1: 'Місто Київ' },
+      en: { ...base, name: 'Kyiv', admin1: 'Kyiv City' },
+    })
+
+    expect(city).toMatchObject({
+      name: 'Kyiv',
+      localNames: { uk: 'Київ', en: 'Kyiv' },
+      regions: { uk: 'Місто Київ', en: 'Kyiv City' },
+      country: 'UA',
+    })
+    expect(getCityRegion(city, 'uk')).toBe('Місто Київ, Україна')
+  })
+
+  it('merges sources: keeps the first result, takes local names from later ones', () => {
+    const fromOpenMeteo = normalizeOpenMeteoCity(
+      { latitude: 50.3715, longitude: 30.3686, country_code: 'UA', name: 'Kriukivshchyna' },
+      {},
+    )
+    const fromOwm = normalizeGeoCity({
+      name: 'Kriukivshchyna',
+      local_names: { uk: 'Крюківщина' },
+      lat: 50.3719,
+      lon: 30.3716,
+      country: 'UA',
+    })
+    const other = normalizeGeoCity({ ...raw })
+
+    const merged = mergeCities([fromOpenMeteo], [fromOwm, other])
+
+    expect(merged).toHaveLength(2)
+    expect(merged[0].id).toBe(fromOpenMeteo.id)
+    expect(getCityName(merged[0], 'uk')).toBe('Крюківщина')
   })
 })

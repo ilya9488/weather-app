@@ -67,7 +67,7 @@ async function runSearch(text) {
   const { signal } = controller
 
   try {
-    const found = await searchCities(text, { signal })
+    const found = await searchCities(text, { signal, locale: locale.value })
     results.value = found
     error.value = null
     activeIndex.value = found.length ? 0 : -1

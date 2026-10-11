@@ -1,0 +1,88 @@
+{
+  "app": {
+    "title": "Weather",
+    "logoAlt": "Weather — home"
+  },
+  "nav": {
+    "label": "Sections",
+    "home": "Home",
+    "favorites": "Favorites"
+  },
+  "settings": {
+    "language": "Interface language",
+    "themeToLight": "Switch to day theme",
+    "themeToDark": "Switch to night theme"
+  },
+  "search": {
+    "label": "City",
+    "placeholder": "Start typing a city name",
+    "loading": "Searching cities…",
+    "empty": "No city found. Check the spelling.",
+    "results": "Cities found: {count}"
+  },
+  "mode": {
+    "label": "Forecast period",
+    "day": "Day",
+    "week": "5 days"
+  },
+  "block": {
+    "label": "Weather: {city}",
+    "emptyLabel": "New weather block",
+    "empty": "Choose a city to see the weather",
+    "detecting": "Detecting your city…",
+    "loading": "Loading the weather…",
+    "remove": "Remove block",
+    "add": "Add block",
+    "counter": "{count} of {max}",
+    "limit": "You can add up to {max} blocks"
+  },
+  "favorites": {
+    "add": "Add to favorites",
+    "added": "In favorites",
+    "addLabel": "Add {city} to favorites",
+    "removeLabel": "Remove {city} from favorites",
+    "empty": "No favorites yet. Add a city with the star on the Home tab.",
+    "limitTitle": "Maximum {max} cities",
+    "limitText": "To add {city}, remove a city from favorites, because the maximum is {max}.",
+    "remove": "Remove"
+  },
+  "confirm": {
+    "removeTitle": "Remove block?",
+    "removeText": "The weather block for {city} will be removed.",
+    "removeEmptyText": "The empty block will be removed.",
+    "confirm": "Remove",
+    "cancel": "Cancel"
+  },
+  "modal": {
+    "close": "Close"
+  },
+  "weather": {
+    "now": "Now",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "pressure": "Pressure",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset",
+    "windUnit": "m/s",
+    "pressureUnit": "hPa",
+    "today": "Today",
+    "avg": "average",
+    "range": "min {min} / max {max}"
+  },
+  "chart": {
+    "hourly": "Temperature for the next 24 hours",
+    "daily": "Average temperature by day",
+    "temperature": "Temperature"
+  },
+  "errors": {
+    "NO_KEY": "OpenWeatherMap API key is missing. Add VITE_OWM_API_KEY to the .env file.",
+    "UNAUTHORIZED": "The OpenWeatherMap API key is invalid or not activated yet.",
+    "RATE_LIMIT": "Too many requests to OpenWeatherMap. Try again in a minute.",
+    "NOT_FOUND": "No data found for this city.",
+    "NETWORK": "Can't reach the weather server. Check your connection.",
+    "UNKNOWN": "Couldn't load the data.",
+    "ipDetect": "Couldn't detect your city. Find it with the search.",
+    "retry": "Try again"
+  }
+}

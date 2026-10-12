@@ -3,9 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Weather app powered by OpenWeatherMap" />
+    <meta name="description" content="Погода на сьогодні та на 5 днів — OpenWeatherMap" />
+    <title>Погода</title>
+
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <title>Weather</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+
+    <!-- Installable app: Android / desktop use the manifest, iOS reads these tags -->
+    <meta name="theme-color" content="#eef3ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Погода" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+
     <script>
       // Apply the saved theme before first paint to avoid a flash of the wrong theme
       try {
@@ -16,13 +27,16 @@
             ? 'dark'
             : 'light'
         document.documentElement.dataset.theme = theme
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').content = '#0b130d'
+        }
       } catch (e) {
         document.documentElement.dataset.theme = 'light'
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-B65gM2FE.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BC7LPFOA.css">
-  </head>
+    <script type="module" crossorigin src="./assets/index-DFuiRzcW.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BrAH9G1y.css">
+  <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js" defer></script></head>
   <body>
     <div id="app"></div>
   </body>

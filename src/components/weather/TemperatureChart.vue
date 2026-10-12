@@ -156,7 +156,7 @@ function buildOptions(colors) {
         titleFont: { ...font, weight: '600' },
         bodyFont: font,
         padding: 10,
-        cornerRadius: 8,
+        cornerRadius: 3,
         displayColors: false,
         callbacks: {
           title: (items) => {

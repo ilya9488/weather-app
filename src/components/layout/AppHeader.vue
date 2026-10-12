@@ -24,7 +24,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
     <div class="container header__inner">
       <RouterLink :to="{ name: 'home' }" class="logo" :aria-label="t('app.logoAlt')">
         <svg class="logo__mark" width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
-          <rect width="64" height="64" rx="16" class="logo__bg" />
+          <rect width="64" height="64" rx="6" class="logo__bg" />
           <circle cx="26" cy="26" r="10" class="logo__sun" />
           <g class="logo__cloud">
             <circle cx="28" cy="40" r="8" />
@@ -164,7 +164,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
 
 .theme-btn {
   border-color: var(--line);
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   background: var(--surface);
   color: var(--ink);
 }

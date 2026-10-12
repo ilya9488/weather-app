@@ -9,10 +9,10 @@
   --container: 1200px;
   --gutter: 16px;
 
-  --radius-lg: 20px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --radius-pill: 999px;
+  --radius-lg: 4px;
+  --radius-md: 3px;
+  --radius-sm: 2px;
+  --radius-pill: 3px;
 
   --dur: 180ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);

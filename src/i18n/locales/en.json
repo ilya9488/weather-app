@@ -87,5 +87,12 @@
     "UNKNOWN": "Couldn't load the data.",
     "ipDetect": "Couldn't detect your city. Find it with the search.",
     "retry": "Try again"
+  },
+  "install": {
+    "button": "Install app",
+    "iosTitle": "Install on iPhone",
+    "iosStep1": "Tap Share in Safari",
+    "iosStep2": "Choose “Add to Home Screen”",
+    "iosStep3": "Tap “Add” — the app appears on your Home Screen"
   }
 }

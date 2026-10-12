@@ -1,10 +1,12 @@
 <script setup>
-import { computed, useId } from 'vue'
+import { computed, ref, useId } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/stores/settings'
 import { Theme } from '@/constants'
 import AppIcon from '@/components/ui/AppIcon.vue'
+import BaseModal from '@/components/ui/BaseModal.vue'
+import { usePwaInstall } from '@/composables/usePwaInstall'
 
 const { t } = useI18n()
 const settings = useSettingsStore()
@@ -17,6 +19,14 @@ const LANGUAGES = [
 ]
 
 const isDark = computed(() => theme.value === Theme.DARK)
+
+const { available: canInstall, canPrompt, prompt: promptInstall } = usePwaInstall()
+const isIosHintOpen = ref(false)
+
+function onInstallClick() {
+  if (canPrompt.value) promptInstall()
+  else isIosHintOpen.value = true
+}
 </script>
 
 <template>
@@ -25,12 +35,11 @@ const isDark = computed(() => theme.value === Theme.DARK)
       <RouterLink :to="{ name: 'home' }" class="logo" :aria-label="t('app.logoAlt')">
         <svg class="logo__mark" width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
           <circle cx="32" cy="32" r="32" class="logo__bg" />
-          <circle cx="26" cy="26" r="10" class="logo__sun" />
+          <circle cx="25" cy="26" r="10" class="logo__sun" />
           <g class="logo__cloud">
-            <circle cx="28" cy="40" r="8" />
-            <circle cx="38" cy="34" r="10" />
-            <circle cx="46" cy="41" r="7" />
-            <rect x="20" y="40" width="33" height="8" rx="4" />
+            <circle cx="32" cy="38" r="7" />
+            <circle cx="42" cy="33" r="10" />
+            <rect x="22" y="38" width="34" height="12" rx="6" />
           </g>
         </svg>
         <span class="logo__text headline">{{ t('app.title') }}</span>
@@ -60,8 +69,19 @@ const isDark = computed(() => theme.value === Theme.DARK)
         </fieldset>
 
         <button
+          v-if="canInstall"
           type="button"
-          class="icon-btn theme-btn"
+          class="icon-btn header__btn"
+          :aria-label="t('install.button')"
+          :title="t('install.button')"
+          @click="onInstallClick"
+        >
+          <AppIcon name="install" :size="19" />
+        </button>
+
+        <button
+          type="button"
+          class="icon-btn header__btn"
           :aria-label="isDark ? t('settings.themeToLight') : t('settings.themeToDark')"
           :title="isDark ? t('settings.themeToLight') : t('settings.themeToDark')"
           @click="settings.toggleTheme"
@@ -70,6 +90,17 @@ const isDark = computed(() => theme.value === Theme.DARK)
         </button>
       </div>
     </div>
+
+    <BaseModal :open="isIosHintOpen" :title="t('install.iosTitle')" @close="isIosHintOpen = false">
+      <ol class="ios-steps">
+        <li>
+          <span class="ios-steps__icon"><AppIcon name="share" :size="16" /></span>
+          {{ t('install.iosStep1') }}
+        </li>
+        <li>{{ t('install.iosStep2') }}</li>
+        <li>{{ t('install.iosStep3') }}</li>
+      </ol>
+    </BaseModal>
   </header>
 </template>
 
@@ -131,9 +162,34 @@ const isDark = computed(() => theme.value === Theme.DARK)
   font-size: 13px;
 }
 
-.theme-btn {
+.header__btn {
   background: var(--fill);
   color: var(--ink);
+}
+
+.ios-steps {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+  padding-left: 20px;
+  list-style: decimal;
+  color: var(--ink);
+}
+
+.ios-steps li::marker {
+  color: var(--muted);
+}
+
+.ios-steps__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 4px;
+  border-radius: 7px;
+  background: var(--fill);
+  color: #0a84ff;
+  vertical-align: middle;
 }
 
 @media (max-width: 519px) {

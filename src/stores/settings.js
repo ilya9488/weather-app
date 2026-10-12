@@ -4,6 +4,8 @@ import { i18n, LOCALES } from '@/i18n'
 import { Theme } from '@/constants'
 import { readStorage, writeStorage } from '@/utils/storage'
 
+const THEME_COLORS = { [Theme.LIGHT]: '#eef3ec', [Theme.DARK]: '#0b130d' }
+
 function getInitialTheme() {
   const saved = readStorage('theme', null)
   if (Object.values(Theme).includes(saved)) return saved
@@ -35,7 +37,17 @@ export const useSettingsStore = defineStore('settings', () => {
   )
   watch(locale, (value) => writeStorage('locale', value))
 
-  watch(theme, (value) => (document.documentElement.dataset.theme = value), { immediate: true })
+  watch(
+    theme,
+    (value) => {
+      document.documentElement.dataset.theme = value
+      // Browser / installed app status bar follows the theme
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', THEME_COLORS[value])
+    },
+    { immediate: true },
+  )
   watch(theme, (value) => writeStorage('theme', value))
 
   return { locale, theme, setLocale, toggleTheme }

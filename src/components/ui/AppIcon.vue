@@ -5,7 +5,9 @@ defineProps({
     type: String,
     required: true,
     validator: (value) =>
-      ['star', 'plus', 'close', 'search', 'sun', 'moon', 'calendar'].includes(value),
+      ['star', 'plus', 'close', 'search', 'sun', 'moon', 'calendar', 'install', 'share'].includes(
+        value,
+      ),
   },
   filled: { type: Boolean, default: false },
   size: { type: Number, default: 20 },
@@ -43,6 +45,11 @@ defineProps({
       />
     </g>
     <path v-else-if="name === 'moon'" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+    <path v-else-if="name === 'install'" d="M12 4v10.5M7.5 10 12 14.5 16.5 10M5 19.5h14" />
+    <g v-else-if="name === 'share'">
+      <path d="M12 3.5v11M8 7.5l4-4 4 4" />
+      <path d="M8.5 10.5H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5" />
+    </g>
     <g v-else-if="name === 'calendar'">
       <rect x="4" y="5.5" width="16" height="14.5" rx="2" />
       <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />

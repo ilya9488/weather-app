@@ -6,7 +6,7 @@ vi.mock('@/api/http', () => ({
 }))
 
 const { http, owmHttp } = await import('@/api/http')
-const { searchCities, clearSearchCache } = await import('@/api/geocoding')
+const { searchCities, clearSearchCache, parseQuery } = await import('@/api/geocoding')
 
 const kharkiv = { id: 706483, latitude: 49.98, longitude: 36.25, country_code: 'UA' }
 const district = {
@@ -114,5 +114,49 @@ describe('searchCities', () => {
     const calls = http.get.mock.calls.length
     await searchCities('харк ')
     expect(http.get.mock.calls.length).toBe(calls)
+  })
+
+  it('puts the nearest of same-named villages first and filters by region', async () => {
+    const village = (id, latitude, longitude, admin1, population) => ({
+      id,
+      name: 'Tarasivka',
+      latitude,
+      longitude,
+      admin1,
+      admin2: 'District',
+      country_code: 'UA',
+      feature_code: 'PPL',
+      population,
+    })
+    const results = [
+      village(1, 46.14, 33.11, 'Херсонська область', 1114),
+      village(2, 50.24, 34.34, 'Полтавська область', 1321),
+      village(3, 50.34, 30.31, 'Київська область', undefined),
+    ]
+    http.get.mockImplementation((_url, { params }) =>
+      Promise.resolve({ data: params.name === 'Tarasivka' ? { results } : {} }),
+    )
+    owmHttp.get.mockResolvedValue({ data: [] })
+    const near = { lat: 50.37, lon: 30.36 } // Kriukivshchyna
+
+    const ranked = await searchCities('Тарасівка', { near })
+    expect(ranked.map((city) => city.regions.uk)).toEqual([
+      'Київська область',
+      'Полтавська область',
+      'Херсонська область',
+    ])
+    // The Ukrainian name comes from the typed text when it transliterates to the Latin one
+    expect(ranked[0].localNames.uk).toBe('Тарасівка')
+
+    const filtered = await searchCities('Тарасівка, київськ', { near })
+    expect(filtered).toHaveLength(1)
+    expect(filtered[0].regions.uk).toBe('Київська область')
+  })
+})
+
+describe('parseQuery', () => {
+  it('splits the name and the region', () => {
+    expect(parseQuery('Тарасівка, Київська')).toEqual({ name: 'Тарасівка', region: 'Київська' })
+    expect(parseQuery(' Київ ')).toEqual({ name: 'Київ', region: '' })
   })
 })

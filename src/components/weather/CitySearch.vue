@@ -1,7 +1,9 @@
 <script setup>
-import { computed, onBeforeUnmount, ref, useId, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { searchCities } from '@/api/geocoding'
+import { storeToRefs } from 'pinia'
+import { parseQuery, searchCities } from '@/api/geocoding'
+import { useBlocksStore } from '@/stores/blocks'
 import { isCanceled, toApiError } from '@/api/errors'
 import { debounce } from '@/utils/debounce'
 import { getCityName, getCityRegion } from '@/utils/city'
@@ -13,8 +15,11 @@ const city = defineModel('city', { type: Object, default: null })
 
 const MIN_QUERY_LENGTH = 2
 const DEBOUNCE_MS = 300
+// With this many results, suggest narrowing by region
+const REFINE_HINT_FROM = 6
 
 const { t, locale } = useI18n()
+const { userLocation } = storeToRefs(useBlocksStore())
 const uid = useId()
 const inputId = `${uid}-input`
 const listId = `${uid}-list`
@@ -32,6 +37,11 @@ const activeIndex = ref(-1)
 let controller = null
 
 const hasResults = computed(() => results.value.length > 0)
+const refineExample = computed(() => {
+  const { name, region } = parseQuery(query.value)
+  if (region || results.value.length < REFINE_HINT_FROM) return ''
+  return `${name}, ${t('search.refineRegion')}`
+})
 const showPopup = computed(
   () => isOpen.value && (hasResults.value || loading.value || !!error.value || searched.value),
 )
@@ -44,6 +54,13 @@ const statusText = computed(() => {
   if (error.value) return t(`errors.${error.value}`)
   if (!searched.value) return ''
   return hasResults.value ? t('search.results', { count: results.value.length }) : t('search.empty')
+})
+
+// Keyboard navigation: keep the active option visible in the scrollable list
+watch(activeIndex, async (index) => {
+  if (index < 0) return
+  await nextTick()
+  document.getElementById(optionId(index))?.scrollIntoView({ block: 'nearest' })
 })
 
 function resetQuery() {
@@ -67,7 +84,11 @@ async function runSearch(text) {
   const { signal } = controller
 
   try {
-    const found = await searchCities(text, { signal, locale: locale.value })
+    const found = await searchCities(text, {
+      signal,
+      locale: locale.value,
+      near: userLocation.value,
+    })
     results.value = found
     error.value = null
     activeIndex.value = found.length ? 0 : -1
@@ -189,7 +210,13 @@ onBeforeUnmount(cancelSearch)
     </div>
 
     <div v-show="showPopup" class="search__popup">
-      <ul v-show="hasResults" :id="listId" role="listbox" :aria-label="t('search.label')">
+      <ul
+        v-show="hasResults"
+        :id="listId"
+        class="search__list"
+        role="listbox"
+        :aria-label="t('search.label')"
+      >
         <li
           v-for="(item, index) in results"
           :id="optionId(index)"
@@ -209,7 +236,13 @@ onBeforeUnmount(cancelSearch)
       <p v-else-if="error" class="search__message search__message--error">
         {{ t(`errors.${error}`) }}
       </p>
-      <p v-else-if="!hasResults && searched" class="search__message">{{ t('search.empty') }}</p>
+      <p v-else-if="!hasResults && searched" class="search__message">
+        {{ t('search.empty') }}
+        <template v-if="parseQuery(query).region">{{ t('search.emptyRegion') }}</template>
+      </p>
+      <p v-if="hasResults && refineExample" class="search__hint">
+        {{ t('search.refine', { example: refineExample }) }}
+      </p>
     </div>
 
     <span class="visually-hidden" aria-live="polite">{{ statusText }}</span>
@@ -284,10 +317,16 @@ onBeforeUnmount(cancelSearch)
   padding: 6px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  background: var(--surface-strong);
+  background: var(--surface-popover);
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   box-shadow: var(--shadow);
+}
+
+.search__list {
+  max-height: min(360px, 50vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .search__option {
@@ -323,6 +362,14 @@ onBeforeUnmount(cancelSearch)
 
 .search__message--error {
   color: var(--danger);
+}
+
+.search__hint {
+  margin-top: 4px;
+  padding: 8px 10px 4px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
 }
 
 @media (max-width: 519px) {

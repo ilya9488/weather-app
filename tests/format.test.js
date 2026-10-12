@@ -4,6 +4,8 @@ import {
   getCityName,
   getCityRegion,
   makeCityId,
+  matchesRegion,
+  rankCities,
   mergeCities,
   normalizeGeoCity,
   normalizeOpenMeteoCity,
@@ -57,10 +59,12 @@ describe('city helpers', () => {
       name: 'Kyiv',
       localNames: { uk: 'Київ', en: 'Kyiv' },
       regions: {},
+      districts: {},
       lat: raw.lat,
       lon: raw.lon,
       country: 'UA',
       state: 'Kyiv City',
+      population: 0,
     })
   })
 
@@ -111,5 +115,47 @@ describe('city helpers', () => {
     expect(merged).toHaveLength(2)
     expect(merged[0].id).toBe(fromOpenMeteo.id)
     expect(getCityName(merged[0], 'uk')).toBe('Крюківщина')
+  })
+})
+
+describe('rankCities', () => {
+  const place = (name, lat, lon, population = 0) => ({ name, lat, lon, population })
+
+  it('keeps big cities first, then the nearest places', () => {
+    const ranked = rankCities(
+      [
+        place('far village', 46, 33, 1200),
+        place('London CA', 42.98, -81.23, 420000),
+        place('near village', 50.3, 30.3),
+        place('London UK', 51.5, -0.12, 8900000),
+      ],
+      { lat: 50.4, lon: 30.5 },
+    )
+    expect(ranked.map((city) => city.name)).toEqual([
+      'London UK',
+      'London CA',
+      'near village',
+      'far village',
+    ])
+  })
+
+  it('keeps the original order without a location', () => {
+    const list = [place('a', 1, 1), place('b', 2, 2)]
+    expect(rankCities(list, null).map((city) => city.name)).toEqual(['a', 'b'])
+  })
+})
+
+describe('matchesRegion', () => {
+  const city = {
+    regions: { uk: 'Київська область', en: 'Kyiv Oblast' },
+    districts: {},
+    country: 'UA',
+  }
+
+  it('matches region names in any language, case-insensitive', () => {
+    expect(matchesRegion(city, 'київськ')).toBe(true)
+    expect(matchesRegion(city, 'kyiv')).toBe(true)
+    expect(matchesRegion(city, 'Полтав')).toBe(false)
+    expect(matchesRegion(city, '')).toBe(true)
   })
 })

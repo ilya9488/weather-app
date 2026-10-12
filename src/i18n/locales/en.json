@@ -18,7 +18,10 @@
     "placeholder": "Start typing a city name",
     "loading": "Searching cities…",
     "empty": "No city found. Check the spelling.",
-    "results": "Cities found: {count}"
+    "results": "Cities found: {count}",
+    "refine": "Too many matches? Add the region after a comma: “{example}”",
+    "refineRegion": "Kyiv",
+    "emptyRegion": " Check the region after the comma."
   },
   "mode": {
     "label": "Forecast period",

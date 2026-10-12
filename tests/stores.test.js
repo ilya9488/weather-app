@@ -117,16 +117,38 @@ describe('blocks store', () => {
     expect(store.blocks[0].city).toEqual(cities[1])
   })
 
-  it('does not overwrite saved blocks with the IP city', async () => {
+  it('does not overwrite saved blocks, only remembers the location', async () => {
     localStorage.setItem(
       'weather:blocks',
       JSON.stringify([{ id: 'a', city: cities[0], mode: ForecastMode.DAY }]),
     )
+    detectLocationByIp.mockResolvedValue({ lat: 50.4, lon: 30.3, city: 'X', country: 'UA' })
+
+    const store = useBlocksStore()
+    await store.detectDefaultCity()
+    await Promise.resolve()
+
+    expect(store.blocks[0].city).toEqual(cities[0])
+    expect(reverseGeocode).not.toHaveBeenCalled()
+    expect(store.userLocation).toEqual({ lat: 50.4, lon: 30.3 })
+    expect(JSON.parse(localStorage.getItem('weather:userLocation'))).toEqual({
+      lat: 50.4,
+      lon: 30.3,
+    })
+  })
+
+  it('does not detect again when the location is known', async () => {
+    localStorage.setItem(
+      'weather:blocks',
+      JSON.stringify([{ id: 'a', city: cities[0], mode: ForecastMode.DAY }]),
+    )
+    localStorage.setItem('weather:userLocation', JSON.stringify({ lat: 1, lon: 2 }))
+
     const store = useBlocksStore()
     await store.detectDefaultCity()
 
     expect(detectLocationByIp).not.toHaveBeenCalled()
-    expect(store.blocks[0].city).toEqual(cities[0])
+    expect(store.userLocation).toEqual({ lat: 1, lon: 2 })
   })
 
   it('keeps the block empty when IP detection fails', async () => {

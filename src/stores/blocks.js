@@ -9,6 +9,7 @@ import { reverseGeocode } from '@/api/geocoding'
 import { makeCityId } from '@/utils/city'
 
 const STORAGE_KEY = 'blocks'
+const LOCATION_KEY = 'userLocation'
 
 export const DetectStatus = Object.freeze({
   IDLE: 'idle',
@@ -37,12 +38,19 @@ function restoreBlocks() {
   return blocks.length ? blocks : null
 }
 
+function restoreLocation() {
+  const saved = readStorage(LOCATION_KEY, null)
+  return saved && Number.isFinite(saved.lat) && Number.isFinite(saved.lon) ? saved : null
+}
+
 /** Weather blocks on the main tab: at least 1, at most MAX_BLOCKS. */
 export const useBlocksStore = defineStore('blocks', () => {
   const restored = restoreBlocks()
   const blocks = ref(restored ?? [createBlock()])
   const isFirstVisit = !restored
   const detectStatus = ref(DetectStatus.IDLE)
+  // Approximate user location by IP: city search shows the nearest places first
+  const userLocation = ref(restoreLocation())
 
   const canAdd = computed(() => blocks.value.length < MAX_BLOCKS)
   const canRemove = computed(() => blocks.value.length > 1)
@@ -73,17 +81,33 @@ export const useBlocksStore = defineStore('blocks', () => {
     if (block && isValidMode(mode)) block.mode = mode
   }
 
+  function rememberLocation({ lat, lon }) {
+    userLocation.value = { lat, lon }
+    writeStorage(LOCATION_KEY, userLocation.value)
+  }
+
   /**
    * On the first visit the default block shows the user's city detected by IP.
-   * Saved blocks are never overwritten.
+   * Saved blocks are never overwritten; for them only the location is refreshed
+   * in the background (used to rank search results).
    */
   async function detectDefaultCity() {
+    if (detectStatus.value !== DetectStatus.IDLE) return
     const target = blocks.value[0]
-    if (!isFirstVisit || detectStatus.value !== DetectStatus.IDLE || target.city) return
+
+    if (!isFirstVisit || target.city) {
+      if (userLocation.value) return
+      detectStatus.value = DetectStatus.DONE
+      detectLocationByIp()
+        .then(rememberLocation)
+        .catch(() => {})
+      return
+    }
 
     detectStatus.value = DetectStatus.PENDING
     try {
       const location = await detectLocationByIp()
+      rememberLocation(location)
       // Localized city names come from OWM reverse geocoding; IP data is the fallback
       const city = (await reverseGeocode(location.lat, location.lon).catch(() => null)) ?? {
         id: makeCityId(location.lat, location.lon),
@@ -108,6 +132,7 @@ export const useBlocksStore = defineStore('blocks', () => {
   return {
     blocks,
     detectStatus,
+    userLocation,
     canAdd,
     canRemove,
     addBlock,

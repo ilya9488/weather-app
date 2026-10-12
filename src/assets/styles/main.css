@@ -29,6 +29,7 @@
   --bg-glow-3: rgba(150, 214, 190, 0.45);
   --surface: rgba(255, 255, 255, 0.62);
   --surface-strong: rgba(255, 255, 255, 0.86);
+  --surface-popover: rgba(255, 255, 255, 0.97);
   --glass-border: rgba(255, 255, 255, 0.75);
   --fill: rgba(118, 128, 112, 0.12);
   --fill-2: rgba(118, 128, 112, 0.07);
@@ -73,6 +74,7 @@
   --bg-glow-3: rgba(30, 110, 100, 0.26);
   --surface: rgba(30, 44, 32, 0.55);
   --surface-strong: rgba(30, 44, 32, 0.88);
+  --surface-popover: rgba(26, 38, 28, 0.98);
   --glass-border: rgba(255, 255, 255, 0.08);
   --fill: rgba(130, 145, 125, 0.2);
   --fill-2: rgba(130, 145, 125, 0.1);

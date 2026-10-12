@@ -77,13 +77,14 @@ function removeFavorite(cityId) {
   flex-shrink: 0;
   align-items: center;
   gap: 8px;
-  height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  height: 40px;
+  padding: 0 18px 0 14px;
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-pill);
   background: transparent;
-  color: var(--muted);
-  font-weight: 500;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
   white-space: nowrap;
   transition:
     background-color var(--dur) var(--ease),
@@ -92,27 +93,22 @@ function removeFavorite(cityId) {
 }
 
 .favorite-btn:hover {
-  border-color: var(--muted);
-  color: var(--ink);
+  background: var(--accent-soft);
 }
 
 .favorite-btn--active {
-  border-color: var(--sun);
-  background: color-mix(in srgb, var(--sun) 14%, transparent);
-  color: var(--ink);
-}
-
-.favorite-btn--active svg {
-  color: var(--sun);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .favorite-btn--active:hover {
-  border-color: var(--sun);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 @media (max-width: 519px) {
   .favorite-btn {
-    width: 44px;
+    width: 40px;
     padding: 0;
     justify-content: center;
   }
@@ -146,7 +142,7 @@ function removeFavorite(cityId) {
 
 .limit-list__name {
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .limit-list__region {

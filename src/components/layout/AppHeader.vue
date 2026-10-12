@@ -23,8 +23,8 @@ const isDark = computed(() => theme.value === Theme.DARK)
   <header class="header">
     <div class="container header__inner">
       <RouterLink :to="{ name: 'home' }" class="logo" :aria-label="t('app.logoAlt')">
-        <svg class="logo__mark" width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
-          <rect width="64" height="64" rx="6" class="logo__bg" />
+        <svg class="logo__mark" width="40" height="40" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="32" class="logo__bg" />
           <circle cx="26" cy="26" r="10" class="logo__sun" />
           <g class="logo__cloud">
             <circle cx="28" cy="40" r="8" />
@@ -33,7 +33,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
             <rect x="20" y="40" width="33" height="8" rx="4" />
           </g>
         </svg>
-        <span class="logo__text">{{ t('app.title') }}</span>
+        <span class="logo__text headline">{{ t('app.title') }}</span>
       </RouterLink>
 
       <div class="header__controls">
@@ -75,24 +75,23 @@ const isDark = computed(() => theme.value === Theme.DARK)
 
 <style scoped>
 .header {
-  padding: 24px 0 20px;
+  padding: 28px 0 20px;
 }
 
 .header__inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
 }
 
 .logo {
-  grid-column: 2;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 8px;
-  border-radius: var(--radius-md);
-  color: var(--ink);
+  gap: 12px;
+  margin-left: -4px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
   text-decoration: none;
 }
 
@@ -105,19 +104,14 @@ const isDark = computed(() => theme.value === Theme.DARK)
 }
 
 .logo__cloud {
-  fill: var(--surface);
+  fill: #ffffff;
 }
 
 .logo__text {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: 28px;
 }
 
 .header__controls {
-  grid-column: 3;
-  justify-self: end;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -127,17 +121,17 @@ const isDark = computed(() => theme.value === Theme.DARK)
   display: inline-flex;
   margin: 0;
   padding: 3px;
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--accent);
   border-radius: var(--radius-pill);
   background: var(--surface);
 }
 
 .lang__option {
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: var(--radius-pill);
-  color: var(--muted);
+  color: var(--accent);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
   transition:
     background-color var(--dur) var(--ease),
@@ -145,15 +139,12 @@ const isDark = computed(() => theme.value === Theme.DARK)
 }
 
 .lang__option:hover {
-  color: var(--ink);
+  background: var(--accent-soft);
 }
 
-.lang__option--active {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
+.lang__option--active,
 .lang__option--active:hover {
+  background: var(--accent);
   color: var(--accent-ink);
 }
 
@@ -163,28 +154,27 @@ const isDark = computed(() => theme.value === Theme.DARK)
 }
 
 .theme-btn {
-  border-color: var(--line);
-  border-radius: var(--radius-md);
+  border-color: var(--accent);
   background: var(--surface);
-  color: var(--ink);
+  color: var(--accent);
 }
 
-@media (max-width: 599px) {
+@media (max-width: 519px) {
   .header {
-    padding: 16px 0;
-  }
-
-  .header__inner {
-    grid-template-columns: auto 1fr;
+    padding: 16px 0 12px;
   }
 
   .logo {
-    grid-column: 1;
-    margin-left: -8px;
+    gap: 8px;
   }
 
-  .header__controls {
-    grid-column: 2;
+  .logo__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logo__text {
+    font-size: 22px;
   }
 }
 </style>

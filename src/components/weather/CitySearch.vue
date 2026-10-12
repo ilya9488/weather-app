@@ -166,7 +166,7 @@ onBeforeUnmount(cancelSearch)
   <div class="search">
     <label :for="inputId" class="visually-hidden">{{ t('search.label') }}</label>
     <div class="search__field">
-      <AppIcon name="search" :size="18" class="search__icon" />
+      <AppIcon name="search" :size="22" class="search__icon" />
       <input
         :id="inputId"
         v-model="query"
@@ -220,7 +220,7 @@ onBeforeUnmount(cancelSearch)
 .search {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
 }
 
 .search__field {
@@ -231,43 +231,54 @@ onBeforeUnmount(cancelSearch)
 
 .search__icon {
   position: absolute;
-  left: 14px;
-  color: var(--muted);
+  left: 2px;
+  color: var(--accent);
   pointer-events: none;
 }
 
+/* Reads as the block's headline; becomes a field on hover/focus */
 .search__input {
   width: 100%;
-  height: 44px;
-  padding: 0 44px 0 42px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-  font-size: 16px; /* prevents zoom on iOS */
-  transition:
-    border-color var(--dur) var(--ease),
-    background-color var(--dur) var(--ease);
+  height: 48px;
+  padding: 0 36px 0 30px;
+  border: 0;
+  border-bottom: 2px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent-bright);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  transition: border-color var(--dur) var(--ease);
 }
 
 .search__input::placeholder {
   color: var(--muted);
-  opacity: 0.8;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 1;
 }
 
 .search__input:hover {
-  border-color: var(--muted);
+  border-bottom-color: var(--leaf-light);
 }
 
 .search__input:focus {
   outline: none;
-  border-color: var(--accent);
-  background: var(--surface);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  border-bottom-color: var(--accent);
+}
+
+.search__input:focus-visible {
+  box-shadow: 0 2px 0 0 var(--accent);
 }
 
 .search__spinner {
   position: absolute;
-  right: 14px;
+  right: 4px;
 }
 
 .search__popup {
@@ -296,7 +307,11 @@ onBeforeUnmount(cancelSearch)
 }
 
 .search__name {
-  font-weight: 500;
+  font-weight: 700;
+}
+
+.search__option--active .search__name {
+  color: var(--accent);
 }
 
 .search__region {
@@ -312,5 +327,12 @@ onBeforeUnmount(cancelSearch)
 
 .search__message--error {
   color: var(--danger);
+}
+
+@media (max-width: 519px) {
+  .search__input {
+    height: 44px;
+    font-size: 21px;
+  }
 }
 </style>

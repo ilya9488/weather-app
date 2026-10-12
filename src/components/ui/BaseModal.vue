@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
   <dialog ref="dialog" class="modal" :aria-labelledby="titleId" @click="onClick" @cancel="onCancel">
     <div class="modal__content">
       <header class="modal__header">
-        <h2 :id="titleId" class="modal__title">{{ title }}</h2>
+        <h2 :id="titleId" class="modal__title headline">{{ title }}</h2>
         <button type="button" class="icon-btn" :aria-label="t('modal.close')" @click="requestClose">
           <AppIcon name="close" />
         </button>
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
 }
 
 .modal__content {
-  padding: 20px 20px 24px;
+  padding: 24px;
 }
 
 .modal__header {
@@ -116,9 +116,7 @@ onBeforeUnmount(() => {
 
 .modal__title {
   padding-top: 6px;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-size: 22px;
 }
 
 .modal__header .icon-btn {

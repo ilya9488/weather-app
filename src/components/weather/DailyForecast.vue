@@ -62,14 +62,17 @@ const items = computed(() => {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  padding: 14px;
+  padding: 16px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: var(--surface);
 }
 
+/* Today stands out as a solid green card */
 .day--today {
   border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .day__when {
@@ -78,58 +81,76 @@ const items = computed(() => {
 }
 
 .day__name {
-  font-weight: 600;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.day__date,
+.day__avg,
+.day__range {
+  color: var(--muted);
+}
+
+.day--today .day__date,
+.day--today .day__avg,
+.day--today .day__range {
+  color: inherit;
+  opacity: 0.85;
 }
 
 .day__date {
-  color: var(--muted);
   font-size: 13px;
+  font-weight: 500;
 }
 
 .day__temp {
   display: flex;
   align-items: baseline;
   gap: 6px;
-  font-family: var(--font-display);
-  font-size: 30px;
-  font-weight: 500;
+  color: var(--accent-bright);
+  font-size: 34px;
+  font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
 
+.day--today .day__temp {
+  color: inherit;
+}
+
 .day__avg {
-  font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0;
-  color: var(--muted);
 }
 
 .day__desc {
   font-size: 14px;
+  font-weight: 600;
   line-height: 1.3;
 }
 
 .day__range {
   margin-top: auto;
-  color: var(--muted);
   font-size: 13px;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 859px) {
   .days {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
   .day {
     display: grid;
-    grid-template-columns: minmax(84px, 1fr) 44px minmax(88px, auto);
+    grid-template-columns: minmax(0, 1fr) 44px auto;
     grid-template-areas:
       'when icon temp'
-      'desc desc range';
+      'desc range range';
     align-items: center;
     gap: 4px 12px;
     padding: 10px 14px;
@@ -148,18 +169,18 @@ const items = computed(() => {
   .day__temp {
     grid-area: temp;
     justify-self: end;
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .day__desc {
     grid-area: desc;
-    color: var(--muted);
   }
 
   .day__range {
     grid-area: range;
     justify-self: end;
     margin-top: 0;
+    white-space: nowrap;
   }
 }
 </style>

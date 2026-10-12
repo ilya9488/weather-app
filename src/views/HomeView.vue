@@ -107,26 +107,28 @@ async function confirmRemoval() {
 .home__blocks {
   position: relative;
   display: grid;
-  gap: 20px;
+  gap: 44px;
 }
 
 .home__add {
-  margin-top: 20px;
+  margin-top: 44px;
 }
 
 .add-block {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
-  min-height: 64px;
-  padding: 12px 20px;
-  border: 1.5px dashed var(--line);
+  min-height: 72px;
+  padding: 14px 20px;
+  border: 2px dashed var(--leaf-light);
   border-radius: var(--radius-lg);
   background: transparent;
-  color: var(--ink);
-  font-weight: 500;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 800;
   text-align: left;
+  text-transform: uppercase;
   transition:
     border-color var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
@@ -138,15 +140,16 @@ async function confirmRemoval() {
 }
 
 .add-block:disabled {
+  border-color: var(--line);
   color: var(--muted);
 }
 
 .add-block__icon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   background: var(--accent);
   color: var(--accent-ink);
 }
@@ -158,15 +161,26 @@ async function confirmRemoval() {
 
 .add-block__counter {
   margin-left: auto;
-  color: var(--muted);
-  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
+  text-transform: none;
+}
+
+.add-block:disabled .add-block__counter {
+  background: var(--surface-2);
+  color: var(--muted);
 }
 
 .home__hint {
   margin-top: 8px;
   color: var(--muted);
   font-size: 14px;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -191,5 +205,15 @@ async function confirmRemoval() {
 
 .block-list-move {
   transition: transform 220ms var(--ease);
+}
+
+@media (max-width: 519px) {
+  .home__blocks {
+    gap: 36px;
+  }
+
+  .home__add {
+    margin-top: 36px;
+  }
 }
 </style>

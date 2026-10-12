@@ -4,7 +4,8 @@ defineProps({
   name: {
     type: String,
     required: true,
-    validator: (value) => ['star', 'plus', 'close', 'search', 'sun', 'moon'].includes(value),
+    validator: (value) =>
+      ['star', 'plus', 'close', 'search', 'sun', 'moon', 'calendar'].includes(value),
   },
   filled: { type: Boolean, default: false },
   size: { type: Number, default: 20 },
@@ -42,5 +43,9 @@ defineProps({
       />
     </g>
     <path v-else-if="name === 'moon'" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+    <g v-else-if="name === 'calendar'">
+      <rect x="4" y="5.5" width="16" height="14.5" rx="2" />
+      <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+    </g>
   </svg>
 </template>

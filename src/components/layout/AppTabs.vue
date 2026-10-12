@@ -26,21 +26,19 @@ const { items: favorites } = storeToRefs(useFavoritesStore())
 <style scoped>
 .tabs {
   display: flex;
-  gap: 4px;
-  padding-left: 12px;
+  gap: 8px;
 }
 
 .tabs__link {
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
-  border: 1px solid transparent;
-  border-bottom: 0;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
-  color: var(--muted);
-  font-weight: 500;
+  padding: 9px 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-pill);
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 700;
   text-decoration: none;
   transition:
     color var(--dur) var(--ease),
@@ -48,39 +46,29 @@ const { items: favorites } = storeToRefs(useFavoritesStore())
 }
 
 .tabs__link:hover {
-  color: var(--ink);
+  background: var(--accent-soft);
 }
 
-.tabs__link--active {
-  border-color: var(--line);
-  background: var(--surface-2);
-  color: var(--ink);
-}
-
-/* Merge the active tab with the panel below */
-.tabs__link--active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--surface-2);
-}
-
-.tabs__link:focus-visible {
-  outline-offset: -2px;
+.tabs__link--active,
+.tabs__link--active:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .tabs__count {
   min-width: 22px;
   padding: 0 7px;
   border-radius: var(--radius-pill);
-  background: var(--sun);
-  color: #1d1500;
+  background: var(--accent-soft-2);
+  color: var(--accent);
   font-size: 12px;
-  font-weight: 700;
-  line-height: 20px;
+  font-weight: 800;
+  line-height: 22px;
   text-align: center;
+}
+
+.tabs__link--active .tabs__count {
+  background: var(--accent-ink);
+  color: var(--accent);
 }
 </style>

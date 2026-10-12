@@ -156,7 +156,7 @@ function buildOptions(colors) {
         titleFont: { ...font, weight: '600' },
         bodyFont: font,
         padding: 10,
-        cornerRadius: 3,
+        cornerRadius: 6,
         displayColors: false,
         callbacks: {
           title: (items) => {
@@ -167,7 +167,7 @@ function buildOptions(colors) {
         },
       },
       crosshair: { color: colors.grid },
-      extremesLabel: { color: colors.ink, font: `600 13px ${font.family}` },
+      extremesLabel: { color: colors.ink, font: `800 13px ${font.family}` },
     },
   }
 }
@@ -249,10 +249,12 @@ onBeforeUnmount(() => {
 }
 
 .chart__title {
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--accent-bright);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .chart__canvas {

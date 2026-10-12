@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { capitalize, formatLongDate, formatTemp, formatTime } from '@/utils/format'
 import WeatherIcon from '@/components/ui/WeatherIcon.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 /** Weather card for the current day. */
 const props = defineProps({
@@ -34,11 +35,13 @@ const details = computed(() => {
   <div class="today">
     <div class="today__main">
       <p class="today__date">
-        <span class="today__now">{{ t('weather.now') }}</span>
-        {{ dateLine }}
+        <span class="today__date-icon"><AppIcon name="calendar" :size="18" /></span>
+        <span class="today__date-text">
+          <span class="visually-hidden">{{ t('weather.now') }}: </span>{{ dateLine }}
+        </span>
       </p>
       <div class="today__reading">
-        <WeatherIcon :code="weather.icon" :size="84" />
+        <WeatherIcon :code="weather.icon" :size="88" />
         <p class="today__temp">{{ formatTemp(weather.temp) }}<span class="today__unit">C</span></p>
       </div>
       <p class="today__desc">{{ capitalize(weather.description) }}</p>
@@ -61,77 +64,85 @@ const details = computed(() => {
   align-items: center;
 }
 
+/* Date badge: icon in a circle + pill, as on the reference */
 .today__date {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 4px 10px;
-  color: var(--muted);
-  font-size: 14px;
+  gap: 6px;
 }
 
-.today__now {
-  padding: 2px 10px;
+.today__date-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.today__date-text {
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .today__reading {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 12px 0 4px;
+  gap: 14px;
+  margin: 16px 0 6px;
 }
 
 .today__temp {
-  font-family: var(--font-display);
-  font-size: 76px;
-  font-weight: 500;
+  color: var(--accent-bright);
+  font-size: 88px;
+  font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
 }
 
 .today__unit {
-  margin-left: 2px;
-  font-size: 0.42em;
-  font-weight: 400;
+  margin-left: 4px;
+  font-size: 0.36em;
+  font-weight: 700;
   letter-spacing: 0;
-  vertical-align: 0.9em;
-  color: var(--muted);
+  vertical-align: 1.2em;
 }
 
 .today__desc {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .today__details {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--line);
+  gap: 3px;
 }
 
 .today__detail {
-  padding: 12px 14px;
-  background: var(--surface);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
 }
 
 .today__detail dt {
   color: var(--muted);
   font-size: 13px;
+  font-weight: 500;
 }
 
 .today__detail dd {
   margin-top: 2px;
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -143,7 +154,7 @@ const details = computed(() => {
 
 @media (max-width: 519px) {
   .today__temp {
-    font-size: 60px;
+    font-size: 68px;
   }
 
   .today__details {

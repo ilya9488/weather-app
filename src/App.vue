@@ -17,38 +17,29 @@ watchEffect(() => {
 <template>
   <AppHeader />
   <main class="container main">
-    <AppTabs />
-    <div class="panel">
-      <RouterView v-slot="{ Component }">
-        <!-- Keep tab state (scroll, charts) when switching between tabs -->
-        <KeepAlive>
-          <component :is="Component" />
-        </KeepAlive>
-      </RouterView>
-    </div>
+    <AppTabs class="main__tabs" />
+    <RouterView v-slot="{ Component }">
+      <!-- Keep tab state (scroll, charts) when switching between tabs -->
+      <KeepAlive>
+        <component :is="Component" />
+      </KeepAlive>
+    </RouterView>
   </main>
 </template>
 
 <style scoped>
 .main {
-  padding-bottom: 48px;
+  padding-bottom: 72px;
 }
 
-.panel {
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface-2);
+/* Room for the leaves that peek out of the first block */
+.main__tabs {
+  margin-bottom: 40px;
 }
 
 @media (max-width: 519px) {
-  .main {
-    padding-inline: 8px;
-  }
-
-  .panel {
-    padding: 10px;
-    border-radius: var(--radius-md);
+  .main__tabs {
+    margin-bottom: 28px;
   }
 }
 </style>

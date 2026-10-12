@@ -29,6 +29,7 @@ watchEffect(() => {
 
 <style scoped>
 .main {
+  padding-top: 20px;
   padding-bottom: 72px;
 }
 
@@ -38,8 +39,12 @@ watchEffect(() => {
 }
 
 @media (max-width: 519px) {
+  .main {
+    padding-top: 14px;
+  }
+
   .main__tabs {
-    margin-bottom: 28px;
+    margin-bottom: 30px;
   }
 }
 </style>

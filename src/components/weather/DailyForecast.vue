@@ -54,7 +54,7 @@ const items = computed(() => {
 .days {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px;
 }
 
 .day {
@@ -62,17 +62,15 @@ const items = computed(() => {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  padding: 16px;
-  border: 1px solid var(--line);
+  padding: 14px;
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
-  background: var(--surface);
+  background: var(--fill-2);
 }
 
-/* Today stands out as a solid green card */
 .day--today {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-ink);
+  border-color: color-mix(in srgb, var(--accent-solid) 35%, transparent);
+  background: var(--accent-tint);
 }
 
 .day__when {
@@ -81,61 +79,48 @@ const items = computed(() => {
 }
 
 .day__name {
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+.day--today .day__name {
+  color: var(--accent);
 }
 
 .day__date,
 .day__avg,
-.day__range {
+.day__range,
+.day__desc {
   color: var(--muted);
-}
-
-.day--today .day__date,
-.day--today .day__avg,
-.day--today .day__range {
-  color: inherit;
-  opacity: 0.85;
 }
 
 .day__date {
   font-size: 13px;
-  font-weight: 500;
 }
 
 .day__temp {
   display: flex;
   align-items: baseline;
   gap: 6px;
-  color: var(--accent-bright);
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 300;
   line-height: 1.1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-}
-
-.day--today .day__temp {
-  color: inherit;
 }
 
 .day__avg {
   font-size: 12px;
-  font-weight: 500;
   letter-spacing: 0;
 }
 
 .day__desc {
   font-size: 14px;
-  font-weight: 600;
   line-height: 1.3;
 }
 
 .day__range {
   margin-top: auto;
   font-size: 13px;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
@@ -152,7 +137,7 @@ const items = computed(() => {
       'when icon temp'
       'desc range range';
     align-items: center;
-    gap: 4px 12px;
+    gap: 2px 12px;
     padding: 10px 14px;
   }
 

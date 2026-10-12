@@ -35,14 +35,14 @@ const details = computed(() => {
   <div class="today">
     <div class="today__main">
       <p class="today__date">
-        <span class="today__date-icon"><AppIcon name="calendar" :size="18" /></span>
-        <span class="today__date-text">
-          <span class="visually-hidden">{{ t('weather.now') }}: </span>{{ dateLine }}
-        </span>
+        <AppIcon name="calendar" :size="16" />
+        <span
+          ><span class="visually-hidden">{{ t('weather.now') }}: </span>{{ dateLine }}</span
+        >
       </p>
       <div class="today__reading">
-        <WeatherIcon :code="weather.icon" :size="88" />
-        <p class="today__temp">{{ formatTemp(weather.temp) }}<span class="today__unit">C</span></p>
+        <WeatherIcon :code="weather.icon" :size="80" />
+        <p class="today__temp">{{ formatTemp(weather.temp) }}</p>
       </div>
       <p class="today__desc">{{ capitalize(weather.description) }}</p>
     </div>
@@ -64,85 +64,65 @@ const details = computed(() => {
   align-items: center;
 }
 
-/* Date badge: icon in a circle + pill, as on the reference */
 .today__date {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-}
-
-.today__date-icon {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.today__date-text {
-  padding: 6px 14px;
+  padding: 5px 12px 5px 10px;
   border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--accent-tint);
+  color: var(--accent);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.35;
 }
 
 .today__reading {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 16px 0 6px;
+  gap: 12px;
+  margin: 14px 0 4px;
 }
 
+/* Thin, large number — the iOS Weather look */
 .today__temp {
-  color: var(--accent-bright);
-  font-size: 88px;
-  font-weight: 800;
+  color: var(--ink);
+  font-size: 96px;
+  font-weight: 200;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
 
-.today__unit {
-  margin-left: 4px;
-  font-size: 0.36em;
-  font-weight: 700;
-  letter-spacing: 0;
-  vertical-align: 1.2em;
-}
-
 .today__desc {
-  font-size: 18px;
-  font-weight: 700;
+  color: var(--muted);
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .today__details {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3px;
+  gap: 6px;
 }
 
 .today__detail {
-  padding: 14px 16px;
-  border-radius: var(--radius-sm);
-  background: var(--accent-soft);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--fill-2);
 }
 
 .today__detail dt {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
 }
 
 .today__detail dd {
   margin-top: 2px;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -154,7 +134,7 @@ const details = computed(() => {
 
 @media (max-width: 519px) {
   .today__temp {
-    font-size: 68px;
+    font-size: 76px;
   }
 
   .today__details {

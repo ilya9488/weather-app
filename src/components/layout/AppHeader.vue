@@ -23,7 +23,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
   <header class="header">
     <div class="container header__inner">
       <RouterLink :to="{ name: 'home' }" class="logo" :aria-label="t('app.logoAlt')">
-        <svg class="logo__mark" width="40" height="40" viewBox="0 0 64 64" aria-hidden="true">
+        <svg class="logo__mark" width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
           <circle cx="32" cy="32" r="32" class="logo__bg" />
           <circle cx="26" cy="26" r="10" class="logo__sun" />
           <g class="logo__cloud">
@@ -37,13 +37,13 @@ const isDark = computed(() => theme.value === Theme.DARK)
       </RouterLink>
 
       <div class="header__controls">
-        <fieldset class="lang">
+        <fieldset class="segmented">
           <legend class="visually-hidden">{{ t('settings.language') }}</legend>
           <label
             v-for="lang in LANGUAGES"
             :key="lang.value"
-            class="lang__option"
-            :class="{ 'lang__option--active': locale === lang.value }"
+            class="segmented__option lang__option"
+            :class="{ 'segmented__option--active': locale === lang.value }"
             :title="lang.name"
           >
             <input
@@ -66,7 +66,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
           :title="isDark ? t('settings.themeToLight') : t('settings.themeToDark')"
           @click="settings.toggleTheme"
         >
-          <AppIcon :name="isDark ? 'sun' : 'moon'" />
+          <AppIcon :name="isDark ? 'sun' : 'moon'" :size="19" />
         </button>
       </div>
     </div>
@@ -74,8 +74,16 @@ const isDark = computed(() => theme.value === Theme.DARK)
 </template>
 
 <style scoped>
+/* Translucent bar that stays on top, like the iOS navigation bar */
 .header {
-  padding: 28px 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 62%, transparent);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
 }
 
 .header__inner {
@@ -88,7 +96,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-left: -4px;
   padding: 4px;
   border-radius: var(--radius-pill);
@@ -96,7 +104,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
 }
 
 .logo__bg {
-  fill: var(--accent);
+  fill: var(--accent-solid);
 }
 
 .logo__sun {
@@ -108,7 +116,7 @@ const isDark = computed(() => theme.value === Theme.DARK)
 }
 
 .logo__text {
-  font-size: 28px;
+  font-size: 21px;
 }
 
 .header__controls {
@@ -117,64 +125,24 @@ const isDark = computed(() => theme.value === Theme.DARK)
   gap: 8px;
 }
 
-.lang {
-  display: inline-flex;
-  margin: 0;
-  padding: 3px;
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-}
-
 .lang__option {
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  color: var(--accent);
+  min-width: 44px;
+  padding: 4px 10px;
   font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  transition:
-    background-color var(--dur) var(--ease),
-    color var(--dur) var(--ease);
-}
-
-.lang__option:hover {
-  background: var(--accent-soft);
-}
-
-.lang__option--active,
-.lang__option--active:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.lang__option:has(input:focus-visible) {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
 .theme-btn {
-  border-color: var(--accent);
-  background: var(--surface);
-  color: var(--accent);
+  background: var(--fill);
+  color: var(--ink);
 }
 
 @media (max-width: 519px) {
   .header {
-    padding: 16px 0 12px;
-  }
-
-  .logo {
-    gap: 8px;
-  }
-
-  .logo__mark {
-    width: 34px;
-    height: 34px;
+    padding: 10px 0;
   }
 
   .logo__text {
-    font-size: 22px;
+    font-size: 19px;
   }
 }
 </style>

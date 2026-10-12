@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
       <header class="modal__header">
         <h2 :id="titleId" class="modal__title headline">{{ title }}</h2>
         <button type="button" class="icon-btn" :aria-label="t('modal.close')" @click="requestClose">
-          <AppIcon name="close" />
+          <AppIcon name="close" :size="18" />
         </button>
       </header>
       <div class="modal__body">
@@ -72,11 +72,13 @@ onBeforeUnmount(() => {
   width: min(440px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
   padding: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--surface-strong);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
   color: var(--ink);
-  box-shadow: var(--shadow);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
   opacity: 0;
   transform: translateY(8px) scale(0.98);
   transition:
@@ -100,6 +102,8 @@ onBeforeUnmount(() => {
 
 .modal::backdrop {
   background: var(--overlay);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .modal__content {
@@ -115,12 +119,12 @@ onBeforeUnmount(() => {
 }
 
 .modal__title {
-  padding-top: 6px;
-  font-size: 22px;
+  padding-top: 4px;
+  font-size: 20px;
 }
 
 .modal__header .icon-btn {
-  margin: -4px -8px 0 0;
+  margin: -2px -4px 0 0;
 }
 
 .modal__body {

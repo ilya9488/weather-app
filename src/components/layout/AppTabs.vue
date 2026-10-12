@@ -8,14 +8,18 @@ const { items: favorites } = storeToRefs(useFavoritesStore())
 </script>
 
 <template>
-  <nav class="tabs" :aria-label="t('nav.label')">
-    <RouterLink :to="{ name: 'home' }" class="tabs__link" exact-active-class="tabs__link--active">
+  <nav class="segmented tabs" :aria-label="t('nav.label')">
+    <RouterLink
+      :to="{ name: 'home' }"
+      class="segmented__option tabs__link"
+      exact-active-class="segmented__option--active"
+    >
       {{ t('nav.home') }}
     </RouterLink>
     <RouterLink
       :to="{ name: 'favorites' }"
-      class="tabs__link"
-      exact-active-class="tabs__link--active"
+      class="segmented__option tabs__link"
+      exact-active-class="segmented__option--active"
     >
       {{ t('nav.favorites') }}
       <span v-if="favorites.length" class="tabs__count">{{ favorites.length }}</span>
@@ -24,51 +28,36 @@ const { items: favorites } = storeToRefs(useFavoritesStore())
 </template>
 
 <style scoped>
-.tabs {
-  display: flex;
-  gap: 8px;
-}
-
 .tabs__link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 20px;
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-pill);
-  color: var(--accent);
+  justify-content: center;
+  gap: 6px;
+  min-width: 120px;
+  padding: 7px 18px;
   font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  transition:
-    color var(--dur) var(--ease),
-    background-color var(--dur) var(--ease);
-}
-
-.tabs__link:hover {
-  background: var(--accent-soft);
-}
-
-.tabs__link--active,
-.tabs__link--active:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
 }
 
 .tabs__count {
-  min-width: 22px;
-  padding: 0 7px;
+  min-width: 20px;
+  padding: 0 6px;
   border-radius: var(--radius-pill);
-  background: var(--accent-soft-2);
+  background: var(--accent-tint-strong);
   color: var(--accent);
   font-size: 12px;
-  font-weight: 800;
-  line-height: 22px;
+  font-weight: 600;
+  line-height: 20px;
   text-align: center;
 }
 
-.tabs__link--active .tabs__count {
-  background: var(--accent-ink);
-  color: var(--accent);
+@media (max-width: 519px) {
+  .tabs {
+    display: flex;
+  }
+
+  .tabs__link {
+    flex: 1;
+    min-width: 0;
+  }
 }
 </style>

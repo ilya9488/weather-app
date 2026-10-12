@@ -69,13 +69,13 @@ const layers = computed(() => {
   >
     <g v-for="(layer, index) in layers" :key="index" :transform="layer.transform">
       <g v-if="layer.type === 'sun'">
-        <circle cx="32" cy="32" r="11" class="weather-icon__sun" />
+        <circle cx="32" cy="32" r="10" class="weather-icon__sun" />
         <line
           v-for="(ray, i) in RAYS"
           :key="i"
           v-bind="ray"
           class="weather-icon__ray"
-          stroke-width="3.5"
+          stroke-width="2.6"
           stroke-linecap="round"
         />
       </g>
@@ -100,7 +100,7 @@ const layers = computed(() => {
       <g
         v-else-if="layer.type === 'rain'"
         class="weather-icon__drops"
-        stroke-width="3.5"
+        stroke-width="2.6"
         stroke-linecap="round"
       >
         <line x1="24" y1="50" x2="21" y2="58" />
@@ -122,7 +122,7 @@ const layers = computed(() => {
         <circle cx="40" cy="60" r="2.2" />
       </g>
 
-      <g v-else class="weather-icon__mist" stroke-width="4" stroke-linecap="round">
+      <g v-else class="weather-icon__mist" stroke-width="3" stroke-linecap="round">
         <line x1="12" y1="22" x2="44" y2="22" />
         <line x1="20" y1="32" x2="52" y2="32" />
         <line x1="12" y1="42" x2="44" y2="42" />

@@ -44,7 +44,7 @@ const SPROUT = [
       class="leaves__stem"
       d="M50 92 C 50 78, 49 66, 50 50"
       fill="none"
-      stroke-width="3.5"
+      stroke-width="2.5"
       stroke-linecap="round"
     />
     <g
@@ -58,14 +58,14 @@ const SPROUT = [
         :d="LEAF_RIB"
         class="leaves__vein"
         fill="none"
-        stroke-width="1.6"
+        stroke-width="1.2"
         stroke-linecap="round"
       />
       <path
         :d="LEAF_VEINS"
         class="leaves__vein"
         fill="none"
-        stroke-width="1"
+        stroke-width="0.8"
         stroke-linecap="round"
       />
     </g>

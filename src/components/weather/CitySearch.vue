@@ -166,7 +166,7 @@ onBeforeUnmount(cancelSearch)
   <div class="search">
     <label :for="inputId" class="visually-hidden">{{ t('search.label') }}</label>
     <div class="search__field">
-      <AppIcon name="search" :size="22" class="search__icon" />
+      <AppIcon name="search" :size="19" class="search__icon" />
       <input
         :id="inputId"
         v-model="query"
@@ -220,7 +220,7 @@ onBeforeUnmount(cancelSearch)
 .search {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
 }
 
 .search__field {
@@ -231,66 +231,62 @@ onBeforeUnmount(cancelSearch)
 
 .search__icon {
   position: absolute;
-  left: 2px;
-  color: var(--accent);
+  left: 14px;
+  color: var(--muted);
   pointer-events: none;
 }
 
-/* Reads as the block's headline; becomes a field on hover/focus */
+/* iOS-like search field; the selected city reads as the block's title */
 .search__input {
   width: 100%;
-  height: 48px;
-  padding: 0 36px 0 30px;
-  border: 0;
-  border-bottom: 2px solid var(--line);
-  border-radius: 0;
-  background: transparent;
-  color: var(--accent-bright);
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  height: 46px;
+  padding: 0 40px 0 42px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   text-overflow: ellipsis;
-  transition: border-color var(--dur) var(--ease);
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
 }
 
 .search__input::placeholder {
   color: var(--muted);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
-  text-transform: none;
   opacity: 1;
-}
-
-.search__input:hover {
-  border-bottom-color: var(--leaf-light);
 }
 
 .search__input:focus {
   outline: none;
-  border-bottom-color: var(--accent);
-}
-
-.search__input:focus-visible {
-  box-shadow: 0 2px 0 0 var(--accent);
+  border-color: var(--accent-solid);
+  background: var(--surface-strong);
+  box-shadow: 0 0 0 4px var(--accent-tint);
 }
 
 .search__spinner {
   position: absolute;
-  right: 4px;
+  right: 14px;
 }
 
 .search__popup {
   position: absolute;
   z-index: 20;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
   padding: 6px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  background: var(--surface);
+  background: var(--surface-strong);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
   box-shadow: var(--shadow);
 }
 
@@ -303,11 +299,11 @@ onBeforeUnmount(cancelSearch)
 }
 
 .search__option--active {
-  background: var(--accent-soft);
+  background: var(--accent-tint);
 }
 
 .search__name {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .search__option--active .search__name {
@@ -315,7 +311,7 @@ onBeforeUnmount(cancelSearch)
 }
 
 .search__region {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
 }
 
@@ -331,8 +327,8 @@ onBeforeUnmount(cancelSearch)
 
 @media (max-width: 519px) {
   .search__input {
-    height: 44px;
-    font-size: 21px;
+    height: 42px;
+    font-size: 18px;
   }
 }
 </style>

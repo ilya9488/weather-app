@@ -24,7 +24,7 @@ const { items } = storeToRefs(favorites)
       />
     </TransitionGroup>
 
-    <div v-else class="favorites__empty">
+    <div v-else class="favorites__empty glass">
       <span class="favorites__sprout"><DecorLeaves variant="sprout" /></span>
       <p>{{ t('favorites.empty') }}</p>
       <RouterLink :to="{ name: 'home' }" class="btn btn--primary">{{ t('nav.home') }}</RouterLink>
@@ -46,10 +46,7 @@ const { items } = storeToRefs(favorites)
   min-height: 320px;
   padding: 32px 16px;
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow);
   color: var(--muted);
-  font-weight: 500;
   text-align: center;
 }
 
@@ -59,7 +56,7 @@ const { items } = storeToRefs(favorites)
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: var(--accent-soft);
+  background: var(--accent-tint);
 }
 
 .favorites__sprout svg {

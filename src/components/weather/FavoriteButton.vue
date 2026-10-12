@@ -45,7 +45,7 @@ function removeFavorite(cityId) {
     "
     @click="toggle"
   >
-    <AppIcon name="star" :filled="isFavorite" :size="18" />
+    <AppIcon name="star" :filled="isFavorite" :size="17" />
     <span class="favorite-btn__text" aria-hidden="true">
       {{ isFavorite ? t('favorites.added') : t('favorites.add') }}
     </span>
@@ -76,39 +76,40 @@ function removeFavorite(cityId) {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding: 0 18px 0 14px;
-  border: 1.5px solid var(--accent);
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px 0 12px;
+  border: 0;
   border-radius: var(--radius-pill);
-  background: transparent;
+  background: var(--fill);
   color: var(--accent);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
   transition:
     background-color var(--dur) var(--ease),
-    border-color var(--dur) var(--ease),
     color var(--dur) var(--ease);
 }
 
 .favorite-btn:hover {
-  background: var(--accent-soft);
+  background: var(--accent-tint);
 }
 
 .favorite-btn--active {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--accent-tint-strong);
+}
+
+.favorite-btn--active svg {
+  color: var(--accent-solid);
 }
 
 .favorite-btn--active:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+  background: var(--accent-tint);
 }
 
 @media (max-width: 519px) {
   .favorite-btn {
-    width: 40px;
+    width: 36px;
     padding: 0;
     justify-content: center;
   }
@@ -129,9 +130,9 @@ function removeFavorite(cityId) {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 8px 8px 12px;
-  border: 1px solid var(--line);
+  padding: 8px 8px 8px 14px;
   border-radius: var(--radius-md);
+  background: var(--fill-2);
 }
 
 .limit-list__city {
@@ -142,7 +143,7 @@ function removeFavorite(cityId) {
 
 .limit-list__name {
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .limit-list__region {

@@ -8,14 +8,14 @@ defineProps({
 <template>
   <span class="spinner" :role="label ? 'status' : undefined">
     <svg :width="size" :height="size" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <circle class="spinner__track" cx="12" cy="12" r="9" fill="none" stroke-width="3" />
+      <circle class="spinner__track" cx="12" cy="12" r="9" fill="none" stroke-width="2" />
       <circle
         class="spinner__arc"
         cx="12"
         cy="12"
         r="9"
         fill="none"
-        stroke-width="3"
+        stroke-width="2"
         stroke-linecap="round"
         stroke-dasharray="42 100"
       />
@@ -41,7 +41,7 @@ defineProps({
 }
 
 .spinner__arc {
-  stroke: var(--accent);
+  stroke: var(--accent-solid);
 }
 
 @keyframes spin {

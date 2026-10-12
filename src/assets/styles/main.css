@@ -1,8 +1,8 @@
-@import '@fontsource-variable/montserrat';
+@import '@fontsource-variable/inter';
 
 /* ---------- Design tokens ---------- */
 :root {
-  --font: 'Montserrat Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   --container: 1200px;
   --gutter: 16px;
@@ -13,75 +13,98 @@
   --radius-sm: 2px;
   --radius-pill: 999px;
 
-  --dur: 180ms;
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* Frosted glass, like iOS materials */
+  --blur: blur(22px) saturate(160%);
+
+  --dur: 200ms;
+  --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f2f4ef;
-  --surface: #ffffff;
-  --surface-2: #f6f8f3;
-  --ink: #1f2b1c;
-  --muted: #5d6b58;
-  --line: #dfe6d8;
-  /* Fills, buttons and small text (AA on white) */
-  --accent: #2e7d17;
-  --accent-hover: #276a13;
+  --bg: #eef3ec;
+  --bg-glow-1: rgba(170, 220, 130, 0.55);
+  --bg-glow-2: rgba(255, 236, 170, 0.5);
+  --bg-glow-3: rgba(150, 214, 190, 0.45);
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --fill: rgba(118, 128, 112, 0.12);
+  --fill-2: rgba(118, 128, 112, 0.07);
+  --ink: #1c2a19;
+  --muted: #5f6a5b;
+  --line: rgba(28, 42, 25, 0.08);
+  /* Green for text and icons (AA on tinted backgrounds) */
+  --accent: #237318;
   --accent-ink: #ffffff;
-  /* Large headings and numbers */
-  --accent-bright: #3c8c1e;
-  --accent-soft: #e8f3df;
-  --accent-soft-2: #d6eac5;
-  --leaf-light: #8cc63f;
-  --leaf-mid: #5aa62c;
-  --leaf-dark: #2e7d17;
-  --leaf-vein: rgba(255, 255, 255, 0.55);
-  --danger: #b42318;
-  --danger-ink: #ffffff;
-  --sun: #f2b100;
-  --moon: #8a9a86;
-  --cloud: #cdd6c9;
-  --cloud-2: #9fae9a;
-  --rain: #3d7fb8;
-  --chart-line: #3c8c1e;
-  --chart-fill: rgba(140, 198, 63, 0.28);
-  --chart-grid: rgba(31, 43, 28, 0.07);
-  --shadow: 0 1px 2px rgba(31, 43, 28, 0.05), 0 10px 30px rgba(31, 43, 28, 0.07);
-  --overlay: rgba(18, 28, 15, 0.45);
+  /* Lighter green for fills behind icons, the chart and decoration */
+  --accent-solid: #2f9a46;
+  --accent-tint: rgba(47, 154, 70, 0.13);
+  --accent-tint-strong: rgba(47, 154, 70, 0.22);
+  --thumb: #ffffff;
+  --thumb-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06);
+  --leaf-light: #b5de8c;
+  --leaf-mid: #86c45a;
+  --leaf-dark: #5aa83a;
+  --leaf-vein: rgba(255, 255, 255, 0.65);
+  --danger: #c00012;
+  --danger-tint: rgba(255, 59, 48, 0.12);
+  --sun: #ffbf1f;
+  --moon: #a3ae9f;
+  --cloud: #d2dbce;
+  --cloud-2: #aebaa9;
+  --rain: #4a90d9;
+  --chart-line: #2f9a46;
+  --chart-fill: rgba(47, 154, 70, 0.2);
+  --chart-fill-end: rgba(47, 154, 70, 0);
+  --chart-grid: rgba(28, 42, 25, 0.06);
+  --tooltip: rgba(28, 42, 25, 0.86);
+  --tooltip-ink: #ffffff;
+  --shadow: 0 1px 1px rgba(28, 42, 25, 0.03), 0 12px 32px rgba(28, 42, 25, 0.06);
+  --overlay: rgba(28, 42, 25, 0.2);
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0e1710;
-  --surface: #152017;
-  --surface-2: #1b291d;
-  --ink: #e6efe0;
-  --muted: #98a991;
-  --line: #273828;
-  --accent: #6db33f;
-  --accent-hover: #7cc24a;
-  --accent-ink: #0c1a07;
-  --accent-bright: #7cc24a;
-  --accent-soft: rgba(109, 179, 63, 0.13);
-  --accent-soft-2: rgba(109, 179, 63, 0.22);
-  --leaf-light: #6aa83a;
-  --leaf-mid: #4b8c27;
-  --leaf-dark: #2f6a18;
-  --leaf-vein: rgba(255, 255, 255, 0.3);
-  --danger: #f97066;
-  --danger-ink: #1a0503;
-  --sun: #f5c03d;
-  --moon: #d4ddd0;
-  --cloud: #8b9a87;
-  --cloud-2: #56664f;
+  --bg: #0b130d;
+  --bg-glow-1: rgba(60, 140, 60, 0.28);
+  --bg-glow-2: rgba(140, 120, 40, 0.16);
+  --bg-glow-3: rgba(30, 110, 100, 0.26);
+  --surface: rgba(30, 44, 32, 0.55);
+  --surface-strong: rgba(30, 44, 32, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --fill: rgba(130, 145, 125, 0.2);
+  --fill-2: rgba(130, 145, 125, 0.1);
+  --ink: #eef4ea;
+  --muted: #a3b09e;
+  --line: rgba(238, 244, 234, 0.08);
+  --accent: #7bcf68;
+  --accent-ink: #0b1a08;
+  --accent-solid: #4fa743;
+  --accent-tint: rgba(123, 207, 104, 0.14);
+  --accent-tint-strong: rgba(123, 207, 104, 0.24);
+  --thumb: rgba(255, 255, 255, 0.18);
+  --thumb-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --leaf-light: #6fae4a;
+  --leaf-mid: #4f9234;
+  --leaf-dark: #3a7626;
+  --leaf-vein: rgba(255, 255, 255, 0.35);
+  --danger: #ff6961;
+  --danger-tint: rgba(255, 105, 97, 0.16);
+  --sun: #ffc83d;
+  --moon: #d6ded2;
+  --cloud: #aab7a6;
+  --cloud-2: #6e7d6a;
   --rain: #6fb2ea;
-  --chart-line: #64a838;
-  --chart-fill: rgba(100, 168, 56, 0.24);
-  --chart-grid: rgba(230, 239, 224, 0.07);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.28);
-  --overlay: rgba(3, 8, 4, 0.65);
+  --chart-line: #4fa743;
+  --chart-fill: rgba(79, 167, 67, 0.24);
+  --chart-fill-end: rgba(79, 167, 67, 0);
+  --chart-grid: rgba(238, 244, 234, 0.06);
+  --tooltip: rgba(238, 244, 234, 0.92);
+  --tooltip-ink: #0b130d;
+  --shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(0, 0, 0, 0.3);
+  --overlay: rgba(0, 0, 0, 0.35);
 }
 
 /* ---------- Reset ---------- */
@@ -107,9 +130,24 @@ body {
   line-height: 1.5;
   color: var(--ink);
   background: var(--bg);
+  -webkit-font-smoothing: antialiased;
   transition:
     background-color var(--dur) var(--ease),
     color var(--dur) var(--ease);
+}
+
+/* Soft colored glow behind the frosted cards */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60vmax 50vmax at 0% 0%, var(--bg-glow-1), transparent 60%),
+    radial-gradient(50vmax 40vmax at 100% 10%, var(--bg-glow-2), transparent 60%),
+    radial-gradient(60vmax 50vmax at 90% 100%, var(--bg-glow-3), transparent 60%),
+    radial-gradient(50vmax 40vmax at 0% 90%, var(--bg-glow-1), transparent 60%);
+  pointer-events: none;
 }
 
 h1,
@@ -149,7 +187,7 @@ svg {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-solid);
   outline-offset: 2px;
 }
 
@@ -173,13 +211,20 @@ svg {
   border: 0;
 }
 
-/* Large uppercase green heading — the visual signature of the app */
+/* Frosted card */
+.glass {
+  border: 1px solid var(--glass-border);
+  background: var(--surface);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+}
+
 .headline {
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--accent-bright);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .btn {
@@ -189,16 +234,16 @@ svg {
   gap: 8px;
   min-height: 40px;
   padding: 8px 20px;
-  border: 1.5px solid transparent;
+  border: 0;
   border-radius: var(--radius-pill);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1.2;
   text-decoration: none;
   transition:
     background-color var(--dur) var(--ease),
-    border-color var(--dur) var(--ease),
-    color var(--dur) var(--ease);
+    color var(--dur) var(--ease),
+    opacity var(--dur) var(--ease);
 }
 
 .btn--primary {
@@ -207,41 +252,40 @@ svg {
 }
 
 .btn--primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+  opacity: 0.88;
 }
 
 .btn--danger {
-  background: var(--danger);
-  color: var(--danger-ink);
+  background: var(--danger-tint);
+  color: var(--danger);
 }
 
 .btn--danger:hover:not(:disabled) {
-  filter: brightness(1.08);
+  background: color-mix(in srgb, var(--danger) 20%, transparent);
 }
 
 .btn--ghost {
-  background: transparent;
-  border-color: var(--accent);
+  background: var(--fill);
   color: var(--accent);
 }
 
 .btn--ghost:hover:not(:disabled) {
-  background: var(--accent-soft);
+  background: var(--accent-tint);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .icon-btn {
   display: inline-grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   padding: 0;
-  border: 1.5px solid transparent;
+  border: 0;
   border-radius: 50%;
-  background: transparent;
+  background: var(--fill-2);
   color: var(--muted);
   transition:
     background-color var(--dur) var(--ease),
@@ -249,8 +293,50 @@ svg {
 }
 
 .icon-btn:hover:not(:disabled) {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--fill);
+  color: var(--ink);
+}
+
+/* iOS-style segmented control: grey track, white thumb */
+.segmented {
+  display: inline-flex;
+  margin: 0;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+}
+
+.segmented__option {
+  min-width: 72px;
+  padding: 5px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.segmented__option:hover {
+  background: var(--fill-2);
+}
+
+.segmented__option--active,
+.segmented__option--active:hover {
+  background: var(--thumb);
+  box-shadow: var(--thumb-shadow);
+  font-weight: 600;
+}
+
+.segmented__option:has(input:focus-visible) {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 1px;
 }
 
 @media (prefers-reduced-motion: reduce) {

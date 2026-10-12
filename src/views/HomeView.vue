@@ -78,7 +78,7 @@ async function confirmRemoval() {
         :aria-describedby="canAdd ? undefined : 'add-block-hint'"
         @click="addBlock"
       >
-        <span class="add-block__icon"><AppIcon name="plus" :size="22" /></span>
+        <span class="add-block__icon"><AppIcon name="plus" :size="20" /></span>
         <span class="add-block__text">{{ t('block.add') }}</span>
         <span class="add-block__counter">
           {{ t('block.counter', { count: blocks.length, max: MAX_BLOCKS }) }}
@@ -117,26 +117,27 @@ async function confirmRemoval() {
 .add-block {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  min-height: 72px;
-  padding: 14px 20px;
-  border: 2px dashed var(--leaf-light);
+  min-height: 64px;
+  padding: 12px 18px;
+  border: 1.5px dashed color-mix(in srgb, var(--accent-solid) 45%, transparent);
   border-radius: var(--radius-lg);
-  background: transparent;
+  background: var(--surface);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
   color: var(--accent);
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   text-align: left;
-  text-transform: uppercase;
   transition:
     border-color var(--dur) var(--ease),
     background-color var(--dur) var(--ease);
 }
 
 .add-block:hover:not(:disabled) {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  border-color: var(--accent-solid);
+  background: var(--surface-strong);
 }
 
 .add-block:disabled {
@@ -147,40 +148,33 @@ async function confirmRemoval() {
 .add-block__icon {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--accent-tint-strong);
+  color: var(--accent);
 }
 
 .add-block:disabled .add-block__icon {
-  background: var(--line);
+  background: var(--fill);
   color: var(--muted);
 }
 
 .add-block__counter {
   margin-left: auto;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  text-transform: none;
-}
-
-.add-block:disabled .add-block__counter {
-  background: var(--surface-2);
+  background: var(--fill);
   color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .home__hint {
   margin-top: 8px;
   color: var(--muted);
   font-size: 14px;
-  font-weight: 500;
   text-align: center;
 }
 

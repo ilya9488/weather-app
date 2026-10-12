@@ -69,7 +69,7 @@ const chart = computed(() => {
     <DecorLeaves class="block-wrap__leaves block-wrap__leaves--bottom" />
 
     <article
-      class="block"
+      class="block glass"
       :class="{ 'block--favorite': isFavorite }"
       :aria-label="city ? t('block.label', { city: cityName }) : t('block.emptyLabel')"
       :aria-busy="loading || detecting"
@@ -158,6 +158,7 @@ const chart = computed(() => {
   z-index: 0;
   width: 112px;
   height: 112px;
+  opacity: 0.9;
   pointer-events: none;
 }
 
@@ -176,10 +177,7 @@ const chart = computed(() => {
   position: relative;
   z-index: 1;
   padding: 24px;
-  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow);
   transition:
     border-color var(--dur) var(--ease),
     box-shadow var(--dur) var(--ease);
@@ -191,9 +189,9 @@ const chart = computed(() => {
 }
 
 .block--favorite {
-  border-color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent-solid) 70%, transparent);
   box-shadow:
-    0 0 0 1px var(--accent),
+    0 0 0 4px var(--accent-tint),
     var(--shadow);
 }
 
@@ -209,15 +207,15 @@ const chart = computed(() => {
 }
 
 .block__city {
-  font-size: 30px;
+  font-size: 28px;
   overflow-wrap: anywhere;
 }
 
 .block__region {
   margin-top: 4px;
+  padding-left: 2px;
   color: var(--muted);
   font-size: 14px;
-  font-weight: 500;
 }
 
 .block__actions {
@@ -243,7 +241,7 @@ const chart = computed(() => {
 }
 
 .block__chart {
-  padding-top: 24px;
+  padding-top: 20px;
   border-top: 1px solid var(--line);
 }
 
@@ -256,9 +254,8 @@ const chart = computed(() => {
   margin-top: 24px;
   padding: 24px;
   border-radius: var(--radius-md);
-  background: var(--accent-soft);
+  background: var(--fill-2);
   color: var(--muted);
-  font-weight: 500;
   text-align: center;
 }
 
@@ -268,7 +265,7 @@ const chart = computed(() => {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--accent-tint);
 }
 
 .block__sprout svg {
@@ -313,7 +310,7 @@ const chart = computed(() => {
   }
 
   .block__city {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .block-wrap__leaves {

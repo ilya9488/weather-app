@@ -55,12 +55,13 @@ function readColors() {
   return {
     line: cssVar('--chart-line'),
     fill: cssVar('--chart-fill'),
+    fillEnd: cssVar('--chart-fill-end'),
     grid: cssVar('--chart-grid'),
     ink: cssVar('--ink'),
     muted: cssVar('--muted'),
-    surface: cssVar('--surface'),
-    tooltipBg: cssVar('--ink'),
-    tooltipInk: cssVar('--bg'),
+    surface: cssVar('--surface-strong'),
+    tooltipBg: cssVar('--tooltip'),
+    tooltipInk: cssVar('--tooltip-ink'),
   }
 }
 
@@ -110,12 +111,13 @@ const extremesLabelPlugin = {
   },
 }
 
-function createGradient(context, fill) {
+function createGradient(context, fill, fillEnd) {
   const { ctx, chartArea } = context.chart
   if (!chartArea) return fill
   const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom)
   gradient.addColorStop(0, fill)
-  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
+  // Fade to the same hue (fading to transparent black would look grey)
+  gradient.addColorStop(1, fillEnd)
   return gradient
 }
 
@@ -156,7 +158,7 @@ function buildOptions(colors) {
         titleFont: { ...font, weight: '600' },
         bodyFont: font,
         padding: 10,
-        cornerRadius: 6,
+        cornerRadius: 10,
         displayColors: false,
         callbacks: {
           title: (items) => {
@@ -167,7 +169,7 @@ function buildOptions(colors) {
         },
       },
       crosshair: { color: colors.grid },
-      extremesLabel: { color: colors.ink, font: `800 13px ${font.family}` },
+      extremesLabel: { color: colors.ink, font: `600 13px ${font.family}` },
     },
   }
 }
@@ -179,12 +181,12 @@ function buildDataset(colors) {
     borderWidth: 2,
     tension: 0.35,
     fill: true,
-    backgroundColor: (context) => createGradient(context, colors.fill),
-    pointRadius: 4,
-    pointHoverRadius: 6,
+    backgroundColor: (context) => createGradient(context, colors.fill, colors.fillEnd),
+    pointRadius: 3,
+    pointHoverRadius: 5,
     pointBackgroundColor: colors.line,
     pointBorderColor: colors.surface,
-    pointBorderWidth: 2,
+    pointBorderWidth: 1.5,
     pointHitRadius: 16,
   }
 }
@@ -249,12 +251,10 @@ onBeforeUnmount(() => {
 }
 
 .chart__title {
-  margin-bottom: 12px;
-  color: var(--accent-bright);
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .chart__canvas {
